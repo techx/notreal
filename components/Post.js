@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, Image, useWindowDimensions } from 'react-native';
 
-import FaceCrazy from '../assets/icons/face-crazy.svg';
-import FaceWrrr from '../assets/icons/face-wrrr.svg';
+import FaceHappy from '../assets/icons/face-happy.svg';
 import Avatar from '../components/Avatar';
 
 export default function Post({ id, user, likes, location, image }) {
@@ -35,7 +34,7 @@ export default function Post({ id, user, likes, location, image }) {
           }]}
         />
         <View>
-          <FaceCrazy width={42} height={42} color="white" style={styles.like} />
+          <FaceHappy width={42} height={42} color="white" style={styles.like} />
         </View>
       </View>
     </View>
