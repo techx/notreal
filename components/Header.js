@@ -5,7 +5,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import CameraPlusIcon from "../assets/icons/camera-plus.svg";
 import Avatar from "../components/Avatar";
 
+import { useNavigation } from '@react-navigation/native';
+
 export default function Header() {
+  const navigation = useNavigation();
+  
   return (
     <LinearGradient 
       colors={['rgba(255, 255, 255, 1)', 'transparent']}
@@ -13,7 +17,7 @@ export default function Header() {
       style={styles.container}
     >
       <View style={styles.layoutContainer}>
-        <TouchableOpacity style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => navigation.push('Camera')} style={styles.iconContainer}>
           <CameraPlusIcon style={styles.icon} />
         </TouchableOpacity>
         <Text style={styles.title}>

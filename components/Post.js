@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image, useWindowDimensions } from 'react-native';
+import { useState, useMemo } from 'react'
 
-import FaceHappy from '../assets/icons/face-happy.svg';
+import LikeButton from '../components/LikeButton';
 import Avatar from '../components/Avatar';
 
 export default function Post({ id, user, likes, location, image }) {
@@ -8,6 +9,15 @@ export default function Post({ id, user, likes, location, image }) {
   const { city, state } = location;
   const { front, back } = image;
   const { width } = useWindowDimensions();
+  const [liked, setLiked] = useState(false);
+
+  const actualLikes = useMemo(function () {
+    if (liked) {
+      return likes + 1;
+    }
+
+    return likes;
+  }, [liked]);
 
   return (
     <View style={styles.container}>
@@ -33,8 +43,8 @@ export default function Post({ id, user, likes, location, image }) {
             height: width * (0.36) * (4 / 3)
           }]}
         />
-        <View>
-          <FaceHappy width={42} height={42} color="white" style={styles.like} />
+        <View style={styles.like}>
+          <LikeButton numLikes={actualLikes} onAddLike={() => setLiked(!liked)} />
         </View>
       </View>
     </View>

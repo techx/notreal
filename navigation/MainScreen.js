@@ -1,14 +1,16 @@
 import { View, StyleSheet, FlatList } from 'react-native';
 
 import Post from '../components/Post';
-import { feedData } from '../data/mock';
+import { usePosts } from '../contexts/posts';
 
 export default function MainScreen() {
+  const { posts } = usePosts();
+
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.feed}
-        data={feedData}
+        data={posts}
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => <Post {...item} />}
         keyExtractor={(item) => item.id}
