@@ -2,6 +2,7 @@ import { StyleSheet, View, useWindowDimensions, TouchableOpacity, Image } from '
 import { Camera, CameraType } from 'expo-camera';
 import { useState, useEffect, useRef } from 'react';
 import { usePosts } from '../contexts/posts'
+import { useProfile } from '../contexts/profile';
 import { useNavigation } from '@react-navigation/native';
 
 import Send from '../assets/icons/send.svg'
@@ -17,6 +18,7 @@ export default function CameraScreen() {
   const height = Math.round((width * 16) / 9);
   const otherPicture = pictures[otherSide()]
   const navigation = useNavigation();
+  const profile = useProfile()
   const [cameraReady, setCameraReady] = useState(false);
 
   useEffect(() => { requestPermission() }, []);
@@ -41,14 +43,14 @@ export default function CameraScreen() {
     const post = {
       "id": posts.length,
       "user": {
-        "handle": "@kosinw",
-        "profile": "https://source.unsplash.com/random/500x500"
+        "handle": profile.handle,
+        "profile": profile.profile
       },
       "likes": 0,
       "dislikes": 0,
       "location": {
-        "city": "Cambridge",
-        "state": "MA"
+        "city": profile.location.city,
+        "state": profile.location.state
       },
       "image": {
         "front": pictures[CameraType.front].uri,

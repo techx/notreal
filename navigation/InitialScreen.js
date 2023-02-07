@@ -5,7 +5,7 @@ import { useProfile } from '../contexts/profile'
 
 export default function InitialScreen() {
   const { setHandle, handle } = useProfile()
-  const [value, setValue] = useState(handle.substring(1))
+  const [value, setValue] = useState(handle ? handle.substring(1) : "")
   const navigation = useNavigation()
 
   function handleSubmit() {
