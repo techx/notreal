@@ -1,39 +1,47 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { LinearGradient } from 'expo-linear-gradient';
+import { StatusBar } from 'expo-status-bar'
 
 import CameraPlusIcon from "../assets/icons/camera-plus.svg";
 import Avatar from "../components/Avatar";
 
 import { useNavigation } from '@react-navigation/native';
+import { useProfile } from '../contexts/profile';
 
-export default function Header() {
+export default function Header({ partial = false, darkMode = false }) {
   const navigation = useNavigation();
+  const { handle } = useProfile()
+
+  const lightGradient = ['rgba(255, 255, 255, 1)', 'transparent']
+  const darkGradient = ['rgba(0, 0, 0, 1)', 'transparent']
   
   return (
     <LinearGradient 
-      colors={['rgba(255, 255, 255, 1)', 'transparent']}
+      colors={darkMode ? darkGradient : lightGradient}
       locations={[0, 1.04]}
       style={styles.container}
     >
       <View style={styles.layoutContainer}>
+        {!partial &&
         <TouchableOpacity onPress={() => navigation.push('Camera')} style={styles.iconContainer}>
           <CameraPlusIcon style={styles.icon} />
         </TouchableOpacity>
-        <Text style={styles.title}>
+        }
+        <Text style={[styles.title, { color: darkMode ? "#fff" : "#000" }]}>
           NotReal
         </Text>
-        <TouchableOpacity style={styles.iconContainer}>
-          <Avatar name="Kosi Nwabueze" />
-        </TouchableOpacity>
+        {!partial && <TouchableOpacity>
+          <Avatar onPress={() => navigation.push('Initial')} name={handle.substring(1)} />
+        </TouchableOpacity>}
       </View>
+      <StatusBar translucent backgroundColor='transparent' style={darkMode ? "light" : "dark"} />
     </LinearGradient>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 27,
     paddingVertical: 60,
     backgroundColor: "transparent",
     position: "absolute",
@@ -42,12 +50,9 @@ const styles = StyleSheet.create({
   },
   layoutContainer: {
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     width: "100%",
     flexDirection: "row"
-  },
-  iconContainer: {
-
   },
   icon: {
     width: 24,
@@ -55,7 +60,6 @@ const styles = StyleSheet.create({
     color: "#212529"
   },
   title: {
-    color: "#212529",
     fontFamily: "Manrope_800ExtraBold",
     fontSize: 24
   }

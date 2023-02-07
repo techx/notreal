@@ -17,9 +17,9 @@ export default function CameraScreen() {
   const height = Math.round((width * 16) / 9);
   const otherPicture = pictures[otherSide()]
   const navigation = useNavigation();
+  const [cameraReady, setCameraReady] = useState(false);
 
   useEffect(() => { requestPermission() }, []);
-  useEffect(() => { console.log(otherPicture) }, [type])
 
   if (!status || !status.granted) {
     return <View />;
@@ -65,7 +65,14 @@ export default function CameraScreen() {
   }
 
   async function takePicture() {
+    if (!cameraReady) {
+      return;
+    }
+
     const picture = await cameraRef.current.takePictureAsync()
+    await cameraRef.current.resumePreview()
+    setCameraReady(false)
+
     setPictures({ ...pictures, [type]: picture })
     swapCamera()
   }
@@ -73,7 +80,13 @@ export default function CameraScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.cameraContainer}>
-        <Camera ref={cameraRef} ratio="16:9" style={{ width: "100%", height }} type={type}>
+        <Camera
+          onCameraReady={() => setCameraReady(true)}
+          ref={cameraRef}
+          ratio="16:9"
+          style={{ width: "100%", height }}
+          type={type}
+        >
           {otherPicture !== null && (
             <Image
               source={{ uri: otherPicture.uri }}
@@ -87,8 +100,13 @@ export default function CameraScreen() {
           <Rotate color="white" width={35} height={35} />
         </TouchableOpacity>
         <TouchableOpacity onPress={takePicture} style={styles.take} />
-        <TouchableOpacity disabled={!hasBothPictures()} onPress={submitPicture} style={[styles.secondary, { marginLeft: 20 }]}>
-          <Send color="white" width={35} height={35} />
+        <TouchableOpacity
+          disabled={!hasBothPictures()}
+          onPress={submitPicture}
+          style={[styles.secondary, {
+            marginLeft: 20,
+          }]}>
+          <Send color={hasBothPictures() ? "white" : "#868e96"} width={35} height={35} />
         </TouchableOpacity>
       </View>
     </View>
