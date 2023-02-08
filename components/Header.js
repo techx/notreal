@@ -20,7 +20,7 @@ export default function Header() {
       <View style={styles.layoutContainer}>
         <CameraPlusIcon style={styles.icon} />
         <Text style={styles.title}>NotReal</Text>
-        <Avatar onPress={() => navigation.push('Initial')} name={handle.substring(1)} />
+        <Avatar name={handle.substring(1)} />
       </View>
     </LinearGradient>
   )
