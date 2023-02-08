@@ -6,22 +6,28 @@ import { StatusBar } from 'expo-status-bar'
 import CameraPlusIcon from "../assets/icons/camera-plus.svg";
 import Avatar from "../components/Avatar";
 
-export default function Header() {
+export default function Header({ partial = false, darkMode = false }) {
   const handle = '@kosinw'
 
   const lightGradient = ['rgba(255, 255, 255, 1)', 'transparent']
+  const darkGradient = ['rgba(0, 0, 0, 1)', 'transparent']
 
   return (
     <LinearGradient
-      colors={lightGradient}
+      colors={darkMode ? darkGradient : lightGradient}
       locations={[0, 1.04]}
       style={styles.container}
     >
       <View style={styles.layoutContainer}>
-        <CameraPlusIcon style={styles.icon} />
-        <Text style={styles.title}>NotReal</Text>
-        <Avatar onPress={() => navigation.push('Initial')} name={handle.substring(1)} />
+        {!partial &&
+          <TouchableOpacity>
+            <CameraPlusIcon style={styles.icon} />
+          </TouchableOpacity>
+        }
+        <Text style={[styles.title, { color: darkMode ? "#fff" : "#000" }]}>NotReal</Text>
+        {!partial && <Avatar name={handle.substring(1)} />}
       </View>
+      <StatusBar translucent backgroundColor='transparent' style={darkMode ? "light" : "dark"} />
     </LinearGradient>
   )
 }

@@ -1,11 +1,21 @@
 import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function Avatar({ name, size = 30 }) {
+export default function Avatar({ name, size = 30, url, onPress = function () {}}) {
   return (
-    <View style={[styles.container, { width: size, height: size }]}>
-      <Text style={styles.text}>{name[0]}</Text>
-    </View>
-  );
+    <TouchableOpacity onPress={onPress}>
+      {
+        !url ? (
+          <View style={[styles.container, { width: size, height: size }]}>
+            <Text style={styles.text}>{name[0]}</Text>
+          </View>
+        ) : (
+          <Image
+            style={[styles.image, { width: size, height: size }]}
+            source={{ uri: url }}
+          />
+        )
+      }
+    </TouchableOpacity>);
 }
 
 const styles = StyleSheet.create({
