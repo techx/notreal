@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import { Manrope_800ExtraBold, Manrope_700Bold, Manrope_500Medium } from '@expo-google-fonts/manrope'
 
 import Header from './components/Header';
+import MainScreen from './navigation/MainScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -29,6 +30,7 @@ export default function App() {
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <Header />
+      <MainScreen />
     </View>
   );
 }
