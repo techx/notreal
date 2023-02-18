@@ -62,7 +62,6 @@ export default function CameraScreen() {
     return pictures[CameraType.front] !== null && pictures[CameraType.back] !== null
   }
 
-
   async function takePicture() {
     const picture = await cameraRef.current.takePictureAsync()
     setCameraReady(false)

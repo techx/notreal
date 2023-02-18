@@ -51,7 +51,7 @@ To run the application, first install dependencies then start it:
 
 ```
 yarn install
-yarn dev
+yarn start
 ```
 
 ## Additional Ideas
