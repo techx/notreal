@@ -1,22 +1,32 @@
-import { View, ScrollView, StyleSheet, Text } from 'react-native';
+import { View, FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
 
 import Post from '../components/Post'
 import { feedData } from '../data/mock'
 
 export default function MainScreen() {
-  const post = feedData[0]
+  // const posts = []
+  const posts = feedData
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.feed}>
-        <Post {...post} />
-      </ScrollView>
-      {/* <View style={styles.noPosts}>
-        <Text style={styles.noPostsText}>
-          There seems to be no posts so far, you should make the first one!
-        </Text>
-      </View> */}
+      {posts.length > 0 ?
+        <FlatList
+          style={styles.feed}
+          data={posts}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => <Post {...item} />}
+          keyExtractor={(item) => item.id}
+        />
+        : <View style={styles.noPosts}>
+          <Text style={styles.noPostsText}>
+            There seems to be no posts so far, you should make the first one!
+          </Text>
+          <TouchableOpacity style={styles.noPostsButton}>
+            <Text style={styles.noPostsButtonText}>Post</Text>
+          </TouchableOpacity>
+        </View>
+      }
     </View>
   )
 }
