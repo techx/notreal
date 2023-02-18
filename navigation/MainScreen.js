@@ -10,7 +10,7 @@ export default function MainScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.feed}>
-        <Post />
+        <Post {...post} />
       </ScrollView>
       {/* <View style={styles.noPosts}>
         <Text style={styles.noPostsText}>

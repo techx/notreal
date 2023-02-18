@@ -2,16 +2,16 @@ import { View, Text, Image, StyleSheet, useWindowDimensions } from 'react-native
 
 import Avatar from '../components/Avatar';
 
-export default function Post() {
-  const handle = "@hassan"
-  const city = "Cambridge"
-  const state = "MA"
+export default function Post({ user, likes, location, image }) {
+  const { handle, profile } = user
+  const { city, state } = location
+  const { front, back } = image
   const { width } = useWindowDimensions()
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Avatar size={42} name={handle.substring(1)} />
+        <Avatar url={profile} size={42} name={handle.substring(1)} />
         <View style={styles.textContainer}>
           <Text style={styles.handle}>{handle}</Text>
           <Text style={styles.secondary}>{`${city}, ${state} • 32 min late`}</Text>
@@ -19,14 +19,14 @@ export default function Post() {
       </View>
       <View style={styles.imageContainer}>
         <Image
-          source={{ uri: "https://picsum.photos/768/1024/" }}
+          source={{ uri: back }}
           style={[styles.back, {
             width: width,
             height: width * (4 / 3)
           }]}
         />
         <Image
-          source={{ uri: "https://picsum.photos/768/1024/" }}
+          source={{ uri: front }}
           style={[styles.front, {
             width: width * 0.36,
             height: width * (0.36) * (4 / 3)
