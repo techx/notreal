@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, useWindowDimensions } from 'react-native';
 
 import Avatar from '../components/Avatar';
 
@@ -6,6 +6,7 @@ export default function Post() {
   const handle = "@hassan"
   const city = "Cambridge"
   const state = "MA"
+  const { width } = useWindowDimensions()
 
   return (
     <View style={styles.container}>
@@ -15,6 +16,22 @@ export default function Post() {
           <Text style={styles.handle}>{handle}</Text>
           <Text style={styles.secondary}>{`${city}, ${state} • 32 min late`}</Text>
         </View>
+      </View>
+      <View style={styles.imageContainer}>
+        <Image
+          source={{ uri: "https://picsum.photos/768/1024/" }}
+          style={[styles.back, {
+            width: width,
+            height: width * (4 / 3)
+          }]}
+        />
+        <Image
+          source={{ uri: "https://picsum.photos/768/1024/" }}
+          style={[styles.front, {
+            width: width * 0.36,
+            height: width * (0.36) * (4 / 3)
+          }]}
+        />
       </View>
     </View>
   );
