@@ -1,12 +1,13 @@
 import { View, FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
 
 import Post from '../components/Post'
-import { feedData } from '../data/mock'
+import { usePosts } from '../contexts/posts';
 
 export default function MainScreen() {
   // const posts = []
-  const posts = feedData
+  const { posts } = usePosts();
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -19,10 +20,8 @@ export default function MainScreen() {
           keyExtractor={(item) => item.id}
         />
         : <View style={styles.noPosts}>
-          <Text style={styles.noPostsText}>
-            There seems to be no posts so far, you should make the first one!
-          </Text>
-          <TouchableOpacity style={styles.noPostsButton}>
+          <Text style={styles.noPostsText}>There seems to be no posts so far, you should make the first one!</Text>
+          <TouchableOpacity onPress={() => navigation.push('Camera')} style={styles.noPostsButton}>
             <Text style={styles.noPostsButtonText}>Post</Text>
           </TouchableOpacity>
         </View>
