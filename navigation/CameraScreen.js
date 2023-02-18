@@ -16,6 +16,10 @@ export default function CameraScreen() {
 
   useEffect(() => { requestPermission() }, []);
 
+  if (!status || !status.granted) {
+    return <View />;
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.cameraContainer}>

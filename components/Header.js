@@ -1,12 +1,12 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-import { LinearGradient } from 'expo-linear-gradient'
+import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar'
 
 import CameraPlusIcon from "../assets/icons/camera-plus.svg";
 import Avatar from "../components/Avatar";
 
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
 
 export default function Header({ partial = false, darkMode = false }) {
   const navigation = useNavigation()
