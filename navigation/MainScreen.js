@@ -1,8 +1,17 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, Text } from 'react-native';
+
+
+import Post from '../components/Post'
+import { feedData } from '../data/mock'
 
 export default function MainScreen() {
+  const post = feedData[0]
+
   return (
     <View style={styles.container}>
+      <ScrollView style={styles.feed}>
+        <Post {...post} />
+      </ScrollView>
       <View style={styles.noPosts}>
         <Text style={styles.noPostsText}>
           There seems to be no posts so far, you should make the first one!
