@@ -12,11 +12,11 @@ export default function MainScreen() {
       <ScrollView style={styles.feed}>
         <Post {...post} />
       </ScrollView>
-      <View style={styles.noPosts}>
+      {/* <View style={styles.noPosts}>
         <Text style={styles.noPostsText}>
           There seems to be no posts so far, you should make the first one!
         </Text>
-      </View>
+      </View> */}
     </View>
   )
 }
