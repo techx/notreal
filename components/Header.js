@@ -6,7 +6,10 @@ import { StatusBar } from 'expo-status-bar'
 import CameraPlusIcon from "../assets/icons/camera-plus.svg";
 import Avatar from "../components/Avatar";
 
+import { useNavigation } from '@react-navigation/native'
+
 export default function Header({ partial = false, darkMode = false }) {
+  const navigation = useNavigation()
   const handle = '@kosinw'
 
   const lightGradient = ['rgba(255, 255, 255, 1)', 'transparent']
@@ -20,7 +23,7 @@ export default function Header({ partial = false, darkMode = false }) {
     >
       <View style={styles.layoutContainer}>
         {!partial &&
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.push('Placeholder')}>
             <CameraPlusIcon style={styles.icon} />
           </TouchableOpacity>
         }
