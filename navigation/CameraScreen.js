@@ -1,6 +1,8 @@
 import { StyleSheet, View, useWindowDimensions, TouchableOpacity, Image } from 'react-native'
 import { Camera, CameraType } from 'expo-camera';
 import { useState, useEffect, useRef } from 'react';
+import { usePosts } from '../contexts/posts'
+import { useProfile } from '../contexts/profile';
 import { useNavigation } from '@react-navigation/native';
 
 import Send from '../assets/icons/send.svg'
@@ -12,8 +14,11 @@ export default function CameraScreen() {
   const [pictures, setPictures] = useState({ [CameraType.front]: null, [CameraType.back]: null })
   const cameraRef = useRef();
   const { width } = useWindowDimensions();
+  const { posts, setPosts } = usePosts();
   const height = Math.round((width * 16) / 9);
   const otherPicture = pictures[otherSide()]
+  const navigation = useNavigation();
+  const profile = useProfile()
   const [cameraReady, setCameraReady] = useState(false);
 
   useEffect(() => { requestPermission() }, []);
@@ -28,6 +33,29 @@ export default function CameraScreen() {
 
   function swapCamera() {
     setType(otherSide())
+  }
+
+  function submitPicture() {
+    const post = {
+      "id": posts.length,
+      "user": {
+        "handle": profile.handle,
+        "profile": profile.profile
+      },
+      "likes": 0,
+      "dislikes": 0,
+      "location": {
+        "city": profile.location.city,
+        "state": profile.location.state
+      },
+      "image": {
+        "front": pictures[CameraType.front].uri,
+        "back": pictures[CameraType.back].uri
+      }
+    }
+
+    setPosts([post, ...posts])
+    navigation.navigate('Main')
   }
 
   function hasBothPictures() {
@@ -71,6 +99,8 @@ export default function CameraScreen() {
         </TouchableOpacity>
         <TouchableOpacity onPress={takePicture} style={styles.take} />
         <TouchableOpacity
+          disabled={!hasBothPictures()}
+          onPress={submitPicture}
           style={[styles.secondary, {
             marginLeft: 20,
           }]}>

@@ -7,9 +7,12 @@ import { Manrope_800ExtraBold, Manrope_700Bold, Manrope_500Medium } from '@expo-
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
 
+import PostsProvider from './contexts/posts'
+import ProfileProvider from './contexts/profile'
+
 import Header from './components/Header';
 import MainScreen from './navigation/MainScreen';
-import CameraScreen from './navigation/CameraScreen';
+import CameraScreen from './navigation/CameraScreen'
 
 const Stack = createNativeStackNavigator();
 
@@ -34,12 +37,16 @@ export default function App() {
 
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen options={{ header: () => <Header /> }} name="Main" component={MainScreen} />
-          <Stack.Screen options={{ header: () => <Header darkMode partial /> }} name="Camera" component={CameraScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </View>
+      <ProfileProvider>
+        <PostsProvider>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen options={{ header: () => <Header /> }} name="Main" component={MainScreen} />
+              <Stack.Screen options={{ header: () => <Header darkMode partial /> }} name="Camera" component={CameraScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </PostsProvider>
+      </ProfileProvider>
+    </View >
   );
 }
