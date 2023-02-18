@@ -9,7 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import Header from './components/Header';
 import MainScreen from './navigation/MainScreen';
-import PlaceholderScreen from './navigation/PlaceholderScreen';
+import CameraScreen from './navigation/CameraScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +37,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen options={{ header: () => <Header /> }} name="Main" component={MainScreen} />
-          <Stack.Screen options={{ header: () => <Header /> }} name="Placeholder" component={PlaceholderScreen} />
+          <Stack.Screen options={{ header: () => <Header darkMode partial /> }} name="Camera" component={CameraScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

@@ -23,7 +23,7 @@ export default function Header({ partial = false, darkMode = false }) {
     >
       <View style={styles.layoutContainer}>
         {!partial &&
-          <TouchableOpacity onPress={() => navigation.push('Placeholder')}>
+          <TouchableOpacity onPress={() => navigation.push('Camera')}>
             <CameraPlusIcon style={styles.icon} />
           </TouchableOpacity>
         }
