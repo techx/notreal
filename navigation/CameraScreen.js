@@ -3,20 +3,42 @@ import { Camera, CameraType } from 'expo-camera';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
+import Send from '../assets/icons/send.svg'
+import Rotate from '../assets/icons/rotate.svg'
+
 export default function CameraScreen() {
+  const [status, requestPermission] = Camera.useCameraPermissions();
   const [type, setType] = useState(CameraType.back);
+  const cameraRef = useRef();
   const { width } = useWindowDimensions();
   const height = Math.round((width * 16) / 9);
+  const [cameraReady, setCameraReady] = useState(false);
+
+  useEffect(() => { requestPermission() }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.cameraContainer}>
         <Camera
+          onCameraReady={() => setCameraReady(true)}
+          ref={cameraRef}
           ratio="16:9"
           style={{ width: "100%", height }}
           type={type}
         >
         </Camera>
+      </View>
+      <View style={styles.toolsContainer}>
+        <TouchableOpacity style={[styles.secondary, { marginRight: 20 }]}>
+          <Rotate color="white" width={35} height={35} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.take} />
+        <TouchableOpacity
+          style={[styles.secondary, {
+            marginLeft: 20,
+          }]}>
+          <Send color="white" width={35} height={35} />
+        </TouchableOpacity>
       </View>
     </View>
   )
