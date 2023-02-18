@@ -7,7 +7,7 @@ export function useProfile() {
 }
 
 export default function PostsProvider({ children }) {
-  const [handle, setHandle] = useState('@kosinw')
+  const [handle, setHandle] = useState(null)
   const [location, setLocation] = useState({ city: "Cambridge", state: "MA" })
   const [profile, setProfile] = useState("https://picsum.photos//500/500")
 

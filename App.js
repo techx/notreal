@@ -13,6 +13,7 @@ import ProfileProvider from './contexts/profile'
 import Header from './components/Header';
 import MainScreen from './navigation/MainScreen';
 import CameraScreen from './navigation/CameraScreen'
+import InitialScreen from './navigation/InitialScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,7 @@ export default function App() {
         <PostsProvider>
           <NavigationContainer>
             <Stack.Navigator>
+              <Stack.Screen options={{ header: () => <Header partial /> }} name="Initial" component={InitialScreen} />
               <Stack.Screen options={{ header: () => <Header /> }} name="Main" component={MainScreen} />
               <Stack.Screen options={{ header: () => <Header darkMode partial /> }} name="Camera" component={CameraScreen} />
             </Stack.Navigator>
