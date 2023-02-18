@@ -9,12 +9,39 @@ import Rotate from '../assets/icons/rotate.svg'
 export default function CameraScreen() {
   const [status, requestPermission] = Camera.useCameraPermissions();
   const [type, setType] = useState(CameraType.back);
+  const [pictures, setPictures] = useState({ [CameraType.front]: null, [CameraType.back]: null })
   const cameraRef = useRef();
   const { width } = useWindowDimensions();
   const height = Math.round((width * 16) / 9);
+  const otherPicture = pictures[otherSide()]
   const [cameraReady, setCameraReady] = useState(false);
 
   useEffect(() => { requestPermission() }, []);
+
+  function otherSide() {
+    if (type == CameraType.back) {
+      return CameraType.front
+    }
+
+    return CameraType.back
+  }
+
+  function swapCamera() {
+    setType(otherSide())
+  }
+
+  function hasBothPictures() {
+    return pictures[CameraType.front] !== null && pictures[CameraType.back] !== null
+  }
+
+
+  async function takePicture() {
+    const picture = await cameraRef.current.takePictureAsync()
+    setCameraReady(false)
+
+    setPictures({ ...pictures, [type]: picture })
+    swapCamera()
+  }
 
   if (!status || !status.granted) {
     return <View />;
@@ -30,18 +57,24 @@ export default function CameraScreen() {
           style={{ width: "100%", height }}
           type={type}
         >
+          {otherPicture !== null && (
+            <Image
+              source={{ uri: otherPicture.uri }}
+              style={[styles.image, { width: 0.36 * width, height: 0.36 * height }]}
+            />
+          )}
         </Camera>
       </View>
       <View style={styles.toolsContainer}>
-        <TouchableOpacity style={[styles.secondary, { marginRight: 20 }]}>
+        <TouchableOpacity onPress={swapCamera} style={[styles.secondary, { marginRight: 20 }]}>
           <Rotate color="white" width={35} height={35} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.take} />
+        <TouchableOpacity onPress={takePicture} style={styles.take} />
         <TouchableOpacity
           style={[styles.secondary, {
             marginLeft: 20,
           }]}>
-          <Send color="white" width={35} height={35} />
+          <Send color={hasBothPictures() ? "white" : "#868e96"} width={35} height={35} />
         </TouchableOpacity>
       </View>
     </View>
