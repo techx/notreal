@@ -4,8 +4,20 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 export default function CameraScreen() {
+  const [type, setType] = useState(CameraType.back);
+  const { width } = useWindowDimensions();
+  const height = Math.round((width * 16) / 9);
+
   return (
     <View style={styles.container}>
+      <View style={styles.cameraContainer}>
+        <Camera
+          ratio="16:9"
+          style={{ width: "100%", height }}
+          type={type}
+        >
+        </Camera>
+      </View>
     </View>
   )
 }
