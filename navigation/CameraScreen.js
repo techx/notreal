@@ -67,10 +67,6 @@ export default function CameraScreen() {
   }
 
   async function takePicture() {
-    if (!cameraReady) {
-      return;
-    }
-
     const picture = await cameraRef.current.takePictureAsync()
     await cameraRef.current.resumePreview()
     setCameraReady(false)
